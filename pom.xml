@@ -25,6 +25,8 @@
 
 		<lombok.version>1.18.26</lombok.version>
 		<postgresql.version>42.5.4</postgresql.version>
+		<liquibase-core.version>4.19.0</liquibase-core.version>
+		<keycloak.version>20.0.5</keycloak.version>
 	</properties>
 
 	<dependencies>
@@ -39,12 +41,26 @@
 			<version>${postgresql.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-admin-client</artifactId>
+			<version>${keycloak.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId><!--this includes spring-boot-starter-security-->
 		</dependency>
 	</dependencies>
 
