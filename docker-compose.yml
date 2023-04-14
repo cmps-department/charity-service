@@ -13,7 +13,7 @@ services:
       - "5432:5432"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:21.0.1
+    build: ./keycloak/.
     container_name: keycloak
     restart: always
     command:
