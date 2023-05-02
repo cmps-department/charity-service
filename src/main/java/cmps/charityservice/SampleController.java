@@ -1,5 +1,6 @@
 package cmps.charityservice;
 
+import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.RoleRepresentation;
@@ -17,9 +18,11 @@ import java.util.Map;
 @RequestMapping("/")
 public class SampleController {
     @Autowired
+    private Keycloak keycloak;
     private UsersResource usersResource;
 
-    @GetMapping
+//    @GetMapping
+    private String usersRealm = "usersRealm";
     public Map<String, Object> currentUser(JwtAuthenticationToken principal) {
         return principal.getTokenAttributes();
     }
