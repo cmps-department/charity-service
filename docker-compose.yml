@@ -13,7 +13,7 @@ services:
       - "5432:5432"
 
   keycloak:
-    build: ./keycloak/.
+    image: ghcr.io/cmps-department/charity-keycloak:1.0
     container_name: charity-keycloak
     restart: always
     environment:
