@@ -1,7 +1,7 @@
 {
   "id": "b75ba49c-dbc3-4809-b8a1-f1931560f408",
-  "realm": "usersRealm",
-  "displayName": "usersRealm",
+  "realm": "charity",
+  "displayName": "charity",
   "displayNameHtml": "",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
@@ -49,7 +49,7 @@
     "realm": [
       {
         "id": "0b9cee73-bf55-451c-9015-004ff8b32180",
-        "name": "default-roles-test",
+        "name": "default-roles-charity",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -81,6 +81,14 @@
         "id": "22b8ad32-02b7-4e92-b2c5-b56e7ddcd64f",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "b75ba49c-dbc3-4809-b8a1-f1931560f408",
+        "attributes": {}
+      },
+      {
+        "id": "990cc352-9c40-4642-8dde-aee828107773",
+        "name": "ROLE_ADMIN",
         "composite": false,
         "clientRole": false,
         "containerId": "b75ba49c-dbc3-4809-b8a1-f1931560f408",
@@ -300,7 +308,7 @@
           "attributes": {}
         }
       ],
-      "usersRealm-service": [],
+      "charity-service": [],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -408,7 +416,7 @@
   "groups": [],
   "defaultRole": {
     "id": "0b9cee73-bf55-451c-9015-004ff8b32180",
-    "name": "default-roles-test",
+    "name": "default-roles-charity",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -457,16 +465,26 @@
     {
       "id": "5f63eefa-a06c-4b18-831c-cfe0cab551a9",
       "createdTimestamp": 1681480013169,
-      "username": "service-account-usersrealm-service",
+      "username": "service-account-charity-service",
       "enabled": true,
       "totp": false,
       "emailVerified": false,
-      "serviceAccountClientId": "usersRealm-service",
+      "serviceAccountClientId": "charity-service",
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "default-roles-test"
+        "default-roles-charity"
       ],
+      "clientRoles": {
+        "realm-management": [
+          "query-realms",
+          "view-realm",
+          "manage-realm",
+          "query-users",
+          "view-users",
+          "manage-users"
+        ]
+      },
       "notBefore": 0,
       "groups": []
     }
@@ -496,13 +514,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/usersRealm/account/",
+      "baseUrl": "/realms/charity/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/usersRealm/account/*"
+        "/realms/charity/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -540,13 +558,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/test/account/",
+      "baseUrl": "/realms/charity/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/test/account/*"
+        "/realms/charity/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -709,13 +727,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/usersRealm/console/",
+      "baseUrl": "/admin/charity/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/usersRealm/console/*"
+        "/admin/charity/console/*"
       ],
       "webOrigins": [
         "+"
@@ -770,7 +788,7 @@
     },
     {
       "id": "7e75ff73-0ec1-497e-8a58-cf785850227d",
-      "clientId": "usersRealm-service",
+      "clientId": "charity-service",
       "name": "",
       "description": "",
       "rootUrl": "",
@@ -782,10 +800,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "6mamjF6YEF6rTGk0ZThrZsSj3L6Vwmsw",
       "redirectUris": [
-        "/*"
+        "*"
       ],
       "webOrigins": [
-        "/*"
+        "+"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -802,7 +820,8 @@
         "oauth2.device.authorization.grant.enabled": "false",
         "client.secret.creation.time": "1681480013",
         "backchannel.logout.session.required": "true",
-        "backchannel.logout.revoke.offline.tokens": "false"
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -854,6 +873,69 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "roles",
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "233ea31c-36cd-454f-b1c5-6ba524e185e8",
+      "clientId": "charity-ui",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": true,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "post.logout.redirect.uris": "+"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "0dd709ea-4cf0-4ee5-8ed4-e5be233a4817",
+          "name": "Roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "false",
+            "access.token.claim": "false",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
         "roles",
         "profile",
         "email"
