@@ -21,6 +21,9 @@
             <column name="target_amount" type="varchar">
                 <constraints nullable="false"/>
             </column>
+            <column name="current_amount" type="varchar">
+                <constraints nullable="false"/>
+            </column>
             <column name="short_description" type="varchar">
                 <constraints nullable="false"/>
             </column>

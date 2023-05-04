@@ -21,6 +21,7 @@ public class charityApplication {
     private String purpose;
     private String status;
     private String target_amount;
+    private String current_amount;
     private String short_description;
     private String full_description;
 }
