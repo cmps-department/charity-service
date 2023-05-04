@@ -4,24 +4,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="initial_schema_charityApplication.1" author="">
-        <createTable tableName="Application">
+    <changeSet id="initial_schema_application.1" author="MartianDill">
+        <createTable tableName="application">
             <column name="id" type="varchar">
-                <constraints primaryKey="true" primaryKeyName="charityApplication_id_pk"/>
+                <constraints primaryKey="true" primaryKeyName="application_id_pk"/>
             </column>
-            <column name="author" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="purpose" type="varchar">
+            <column name="author_id" type="varchar">
                 <constraints nullable="false"/>
             </column>
             <column name="status" type="varchar">
                 <constraints nullable="false"/>
             </column>
             <column name="target_amount" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="current_amount" type="varchar">
                 <constraints nullable="false"/>
             </column>
             <column name="short_description" type="varchar">
