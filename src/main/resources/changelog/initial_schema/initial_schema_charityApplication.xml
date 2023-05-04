@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="initial_schema_charityApplication.1" author="">
+        <createTable tableName="Application">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true" primaryKeyName="charityApplication_id_pk"/>
+            </column>
+            <column name="author" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purpose" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_amount" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
