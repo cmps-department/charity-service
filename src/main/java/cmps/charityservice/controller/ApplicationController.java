@@ -23,8 +23,6 @@ public class ApplicationController {
 
     private final ApplicationRepository applicationRepository;
 
-    private final CategoryRepository categoryRepository;
-
     @GetMapping
     public List<Application> getAll(JwtAuthenticationToken principal,
                                     @RequestParam(required = false, defaultValue = "PENDING") Status status,
