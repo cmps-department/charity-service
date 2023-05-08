@@ -47,6 +47,7 @@ public class ApplicationController {
 
         application.setAuthorId(principal.getName());
         application.setStatus(Status.PENDING);
+        application.setCategory(application.getCategory());
 
         return applicationRepository.save(application);
     }
