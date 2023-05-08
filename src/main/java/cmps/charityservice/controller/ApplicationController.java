@@ -4,7 +4,6 @@ import cmps.charityservice.model.Application;
 import cmps.charityservice.model.Category;
 import cmps.charityservice.model.Status;
 import cmps.charityservice.repository.ApplicationRepository;
-import cmps.charityservice.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
