@@ -21,6 +21,9 @@ public class Application {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     private String targetAmount;
 
     private String shortDescription;

@@ -1,8 +1,10 @@
 package cmps.charityservice.controller;
 
 import cmps.charityservice.model.Application;
+import cmps.charityservice.model.Category;
 import cmps.charityservice.model.Status;
 import cmps.charityservice.repository.ApplicationRepository;
+import cmps.charityservice.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +24,8 @@ public class ApplicationController {
 
     private final ApplicationRepository applicationRepository;
 
+    private final CategoryRepository categoryRepository;
+
     @GetMapping
     public List<Application> getAll(JwtAuthenticationToken principal,
                                     @RequestParam(required = false, defaultValue = "PENDING") Status status,
@@ -39,7 +43,8 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public Application createApplication(JwtAuthenticationToken principal, @RequestBody Application application) {
+    public Application createApplication(JwtAuthenticationToken principal,
+                                         @RequestBody Application application) {
 
         application.setAuthorId(principal.getName());
         application.setStatus(Status.PENDING);
@@ -49,7 +54,8 @@ public class ApplicationController {
 
     @PostMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    public Application updateApplication(@PathVariable String id, @RequestBody Application application) {
+    public Application updateApplication(@PathVariable String id,
+                                         @RequestBody Application application) {
         application.setId(id);
 
         return applicationRepository.save(application);
@@ -60,5 +66,13 @@ public class ApplicationController {
     @Transactional
     public void createApplication(@PathVariable String id) {
         applicationRepository.deleteById(id);
+    }
+
+    @GetMapping("/{id}/category")
+    public Category getCategory(@PathVariable String id) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid application ID"));
+
+        return application.getCategory();
     }
 }

@@ -15,6 +15,9 @@
             <column name="status" type="varchar">
                 <constraints nullable="false"/>
             </column>
+            <column name="category" type="varchar">
+                <constraints nullable="false"/>
+            </column>
             <column name="target_amount" type="varchar">
                 <constraints nullable="false"/>
             </column>
