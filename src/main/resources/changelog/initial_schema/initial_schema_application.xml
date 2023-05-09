@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="initial_schema_application.1" author="MartianDill">
+        <createTable tableName="application">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true" primaryKeyName="application_id_pk"/>
+            </column>
+            <column name="author_id" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_amount" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_description" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

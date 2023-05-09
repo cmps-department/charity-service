@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@Secured("ROLE_ADMIN")
 @CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
@@ -22,12 +21,19 @@ public class UserController {
     private final RolesResource rolesResource;
     private final UsersResource usersResource;
 
+    @GetMapping("/{userId}")
+    public UserRepresentation getUserById(@PathVariable String userId) {
+        return usersResource.get(userId).toRepresentation();
+    }
+
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public List<UserRepresentation> getUsers() {
         return usersResource.list();
     }
 
     @PostMapping("/{userId}/roles/admin")
+    @Secured("ROLE_ADMIN")
     public void assignRole(@PathVariable String userId) {
         UserResource user = usersResource.get(userId);
         RoleRepresentation adminRole = rolesResource.get("ROLE_ADMIN").toRepresentation();
@@ -36,6 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}/roles/admin")
+    @Secured("ROLE_ADMIN")
     public void removeRole(@PathVariable String userId) {
         UserResource user = usersResource.get(userId);
         RoleRepresentation adminRole = rolesResource.get("ROLE_ADMIN").toRepresentation();
