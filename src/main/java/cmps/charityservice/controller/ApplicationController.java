@@ -26,6 +26,7 @@ public class ApplicationController {
     @GetMapping
     public List<Application> getAll(JwtAuthenticationToken principal,
                                     @RequestParam(required = false, defaultValue = "PENDING") Status status,
+                                    @RequestParam(required = false) Category category,
                                     @RequestParam(required = false, defaultValue = "0") int page,
                                     @RequestParam(required = false, defaultValue = "50") int size) {
 
@@ -36,7 +37,11 @@ public class ApplicationController {
 
         Status search = isAdmin ? status : Status.APPROVED;
 
-        return applicationRepository.findAllByStatus(search, PageRequest.of(page, size));
+        if (category != null) {
+            return applicationRepository.findAllByStatusAndCategory(search, category, PageRequest.of(page, size));
+        } else {
+            return applicationRepository.findAllByStatus(search, PageRequest.of(page, size));
+        }
     }
 
     @PostMapping
@@ -50,7 +55,7 @@ public class ApplicationController {
         return applicationRepository.save(application);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public Application updateApplication(@PathVariable String id,
                                          @RequestBody Application application) {
@@ -62,15 +67,7 @@ public class ApplicationController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     @Transactional
-    public void createApplication(@PathVariable String id) {
+    public void deleteApplication(@PathVariable String id) {
         applicationRepository.deleteById(id);
-    }
-
-    @GetMapping("/{id}/category")
-    public Category getCategory(@PathVariable String id) {
-        Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid application ID"));
-
-        return application.getCategory();
     }
 }

@@ -1,12 +1,17 @@
 package cmps.charityservice.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum Category {
     ARMY(1),
     REFUGEES(2),
     ANIMALS(3),
-    ELDERY(4),
-    DISABLITY(5),
-    ONKOLOGY(6),
+    ELDERLY(4),
+    DISABILITY(5),
+    ONCOLOGY(6),
     ORPHANS(7),
     HOMELESS(8),
     EKOORG(9),     //EKO ORGANIZATIONS
@@ -14,12 +19,4 @@ public enum Category {
     INTORG(11);     //INTERNATIONAL ORGANIZATIONS
 
     private final int id;
-
-    Category(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
 }
