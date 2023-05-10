@@ -1,14 +1,17 @@
 package cmps.charityservice.model;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Data
-@NoArgsConstructor
 public class Application {
 
     @Id
@@ -29,4 +32,8 @@ public class Application {
     private String shortDescription;
 
     private String fullDescription;
+
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    private List<String> images;
 }
