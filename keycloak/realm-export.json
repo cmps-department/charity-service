@@ -29,8 +29,8 @@
   "oauth2DevicePollingInterval": 5,
   "enabled": true,
   "sslRequired": "external",
-  "registrationAllowed": false,
-  "registrationEmailAsUsername": false,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
   "rememberMe": false,
   "verifyEmail": false,
   "loginWithEmailAllowed": true,
@@ -803,7 +803,7 @@
         "*"
       ],
       "webOrigins": [
-        "+"
+        "*"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -821,7 +821,7 @@
         "client.secret.creation.time": "1681480013",
         "backchannel.logout.session.required": "true",
         "backchannel.logout.revoke.offline.tokens": "false",
-        "post.logout.redirect.uris": "+"
+        "post.logout.redirect.uris": "*"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -895,7 +895,7 @@
         "*"
       ],
       "webOrigins": [
-        "+"
+        "*"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -912,7 +912,7 @@
         "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.session.required": "true",
         "backchannel.logout.revoke.offline.tokens": "false",
-        "post.logout.redirect.uris": "+"
+        "post.logout.redirect.uris": "*"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
