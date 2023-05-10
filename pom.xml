@@ -26,6 +26,7 @@
 
 		<lombok.version>1.18.26</lombok.version>
 		<postgresql.version>42.5.4</postgresql.version>
+		<hibernate-types.version>2.20.0</hibernate-types.version>
 		<liquibase-core.version>4.19.0</liquibase-core.version>
 		<keycloak.version>20.0.5</keycloak.version>
 	</properties>
@@ -40,6 +41,11 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-55</artifactId>
+			<version>${hibernate-types.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
