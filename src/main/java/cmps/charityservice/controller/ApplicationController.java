@@ -5,7 +5,6 @@ import cmps.charityservice.model.Category;
 import cmps.charityservice.model.Status;
 import cmps.charityservice.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -25,23 +24,20 @@ public class ApplicationController {
 
     @GetMapping
     public List<Application> getAll(JwtAuthenticationToken principal,
-                                    @RequestParam(required = false, defaultValue = "PENDING") Status status,
+                                    @RequestParam(required = false) Status status,
                                     @RequestParam(required = false) Category category,
-                                    @RequestParam(required = false, defaultValue = "0") int page,
-                                    @RequestParam(required = false, defaultValue = "50") int size) {
+                                    @RequestParam(required = false) String authorId) {
 
         boolean isAdmin = principal.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(authority -> Objects.equals(authority, "ROLE_ADMIN"));
 
-        Status search = isAdmin ? status : Status.APPROVED;
+        boolean isMyOwn = Objects.equals(principal.getName(), authorId);
 
-        if (category != null) {
-            return applicationRepository.findAllByStatusAndCategory(search, category, PageRequest.of(page, size));
-        } else {
-            return applicationRepository.findAllByStatus(search, PageRequest.of(page, size));
-        }
+        Status searchStatus = isAdmin | isMyOwn ? status : Status.APPROVED;
+
+        return applicationRepository.findAllByFilters(searchStatus, category, authorId);
     }
 
     @PostMapping
