@@ -7,11 +7,15 @@ import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -27,15 +31,49 @@ public class UserController {
         return usersResource.get(userId).toRepresentation();
     }
 
+    @PutMapping("/{userId}")
+    public UserRepresentation updateUser(JwtAuthenticationToken principal, @PathVariable String userId,
+                                         @RequestBody UserRepresentation userRepresentation) {
+
+        if (!Objects.equals(principal.getName(), userId)) {
+            throw new AccessDeniedException("You can only update information about yourself");
+        }
+
+        UserResource user = usersResource.get(userId);
+        user.update(userRepresentation);
+
+        return userRepresentation;
+    }
+
+    @PutMapping("/{userId}/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(JwtAuthenticationToken principal, @PathVariable String userId,
+                               @RequestBody String newPassword) {
+
+        if (!Objects.equals(principal.getName(), userId)) {
+            throw new AccessDeniedException("You can only change your own password");
+        }
+
+        UserResource user = usersResource.get(userId);
+
+        CredentialRepresentation credential = new CredentialRepresentation();
+        credential.setType(CredentialRepresentation.PASSWORD);
+        credential.setValue(newPassword);
+        credential.setTemporary(false);
+
+        user.resetPassword(credential);
+    }
+
     @GetMapping
     @Secured("ROLE_ADMIN")
-    public List<UserRepresentation> getUsers() {
+    public List<UserRepresentation> getAllUsers() {
         return usersResource.list();
     }
 
     @PostMapping("/{userId}/roles/admin")
     @Secured("ROLE_ADMIN")
-    public void assignRole(@PathVariable String userId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void assignAdminRole(@PathVariable String userId) {
         UserResource user = usersResource.get(userId);
         RoleRepresentation adminRole = rolesResource.get("ROLE_ADMIN").toRepresentation();
 
@@ -44,28 +82,11 @@ public class UserController {
 
     @DeleteMapping("/{userId}/roles/admin")
     @Secured("ROLE_ADMIN")
-    public void removeRole(@PathVariable String userId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeAdminRole(@PathVariable String userId) {
         UserResource user = usersResource.get(userId);
         RoleRepresentation adminRole = rolesResource.get("ROLE_ADMIN").toRepresentation();
 
         user.roles().realmLevel().remove(Collections.singletonList(adminRole));
-    }
-
-    @PutMapping("/{userId}/password")
-    public void changePassword(@PathVariable String userId, @RequestBody String newPassword) {
-        UserResource user = usersResource.get(userId);
-        CredentialRepresentation credential = new CredentialRepresentation();
-        credential.setType(CredentialRepresentation.PASSWORD);
-        credential.setValue(newPassword);
-        credential.setTemporary(false);
-        user.resetPassword(credential);
-    }
-
-    @PutMapping("/{userId}/email")
-    public void changeEmail(@PathVariable String userId, @RequestBody String newEmail) {
-        UserResource user = usersResource.get(userId);
-        UserRepresentation userRepresentation = user.toRepresentation();
-        userRepresentation.setEmail(newEmail);
-        user.update(userRepresentation);
     }
 }
