@@ -36,4 +36,8 @@ public class Application {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private List<String> images;
+
+    private String donateLink;
+
+    private String phoneNumber;
 }
