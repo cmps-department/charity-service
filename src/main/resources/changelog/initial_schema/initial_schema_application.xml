@@ -27,13 +27,13 @@
             <column name="full_description" type="varchar">
                 <constraints nullable="false"/>
             </column>
+            <column name="donation_link" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar">
+                <constraints nullable="false"/>
+            </column>
             <column name="images" type="jsonb"/>
-            <column name="donateLink" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="phoneNumber" type="varchar">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>
