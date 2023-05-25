@@ -33,11 +33,11 @@ public class Application {
 
     private String fullDescription;
 
+    private String donationLink;
+
+    private String phoneNumber;
+
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private List<String> images;
-
-    private String donateLink;
-
-    private String phoneNumber;
 }
