@@ -28,6 +28,10 @@ public class ApplicationController {
                                     @RequestParam(required = false) Category category,
                                     @RequestParam(required = false) String authorId) {
 
+        if (Objects.isNull(principal)) {
+            return applicationRepository.findAllByFilters(Status.APPROVED, category, authorId);
+        }
+
         boolean isAdmin = principal.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
