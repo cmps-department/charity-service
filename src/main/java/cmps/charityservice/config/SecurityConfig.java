@@ -28,6 +28,9 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests(auth -> auth
                         .antMatchers(HttpMethod.GET, "/applications").permitAll()
+                        .antMatchers(HttpMethod.GET, "/applications/*").permitAll()
+                        .antMatchers(HttpMethod.GET, "/images/*").permitAll()
+                        .antMatchers(HttpMethod.GET, "/users/*").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer()
                 .jwt()

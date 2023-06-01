@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, String> {
 
@@ -17,4 +18,6 @@ public interface ApplicationRepository extends JpaRepository<Application, String
     List<Application> findAllByFilters(@Param("status") Status status,
                                        @Param("category") Category category,
                                        @Param("authorId") String authorId);
+
+    Optional<Application> findByStatusAndId(Status status, String id);
 }

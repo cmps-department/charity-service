@@ -44,6 +44,12 @@ public class ApplicationController {
         return applicationRepository.findAllByFilters(searchStatus, category, authorId);
     }
 
+    @GetMapping("/{applicationId}")
+    public Application findById(@PathVariable String applicationId) {
+        return applicationRepository.findByStatusAndId(Status.APPROVED, applicationId)
+                .orElseThrow();
+    }
+
     @PostMapping
     public Application createApplication(JwtAuthenticationToken principal,
                                          @RequestBody Application application) {
