@@ -8,16 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, String> {
 
     @Query("SELECT c FROM Application c WHERE (:status is null or c.status = :status)"
             + " and (:category is null or c.category = :category)"
             + " and (:authorId is null or c.authorId = :authorId)")
-    List<Application> findAllByFilters(@Param("status") Status status,
-                                       @Param("category") Category category,
+    List<Application> findAllByFilters(@Param("status") Status status, @Param("category") Category category,
                                        @Param("authorId") String authorId);
-
-    Optional<Application> findByStatusAndId(Status status, String id);
 }

@@ -16,7 +16,6 @@ public class KeycloakConfig {
                              @Value("${keycloak.realm}") String realm,
                              @Value("${keycloak.client.id}") String clientId,
                              @Value("${keycloak.client.secret}") String clientSecret) {
-
         return KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
                 .realm(realm)
@@ -28,14 +27,12 @@ public class KeycloakConfig {
     }
 
     @Bean
-    public UsersResource usersResource(final Keycloak keycloak,
-                                       @Value("${keycloak.realm}") String realm) {
+    public UsersResource usersResource(final Keycloak keycloak, @Value("${keycloak.realm}") String realm) {
         return keycloak.realm(realm).users();
     }
 
     @Bean
-    public RolesResource rolesResource(final Keycloak keycloak,
-                                       @Value("${keycloak.realm}") String realm) {
+    public RolesResource rolesResource(final Keycloak keycloak, @Value("${keycloak.realm}") String realm) {
         return keycloak.realm(realm).roles();
     }
 }

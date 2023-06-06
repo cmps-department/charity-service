@@ -28,7 +28,6 @@ public class ImageController {
     @GetMapping("/{imageId}")
     public ResponseEntity<Resource> downloadImage(@PathVariable String imageId) {
         Resource resource = imageService.getImage(imageId);
-
         if (!resource.exists()) {
             return ResponseEntity.notFound()
                     .build();

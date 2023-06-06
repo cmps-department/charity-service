@@ -30,7 +30,6 @@ public class ImageService {
     public String saveImage(final MultipartFile image) {
         String imageId = UUID.randomUUID()
                 .toString();
-
         Path path = imageStorageLocation.resolve(imageId);
 
         try {

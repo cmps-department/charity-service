@@ -34,7 +34,6 @@ public class UserController {
     @PutMapping("/{userId}")
     public UserRepresentation updateUser(JwtAuthenticationToken principal, @PathVariable String userId,
                                          @RequestBody UserRepresentation userRepresentation) {
-
         if (!Objects.equals(principal.getName(), userId)) {
             throw new AccessDeniedException("You can only update information about yourself");
         }
@@ -49,7 +48,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(JwtAuthenticationToken principal, @PathVariable String userId,
                                @RequestBody String newPassword) {
-
         if (!Objects.equals(principal.getName(), userId)) {
             throw new AccessDeniedException("You can only change your own password");
         }

@@ -27,33 +27,23 @@ public class ApplicationController {
                                     @RequestParam(required = false) Status status,
                                     @RequestParam(required = false) Category category,
                                     @RequestParam(required = false) String authorId) {
-
-        if (Objects.isNull(principal)) {
-            return applicationRepository.findAllByFilters(Status.APPROVED, category, authorId);
-        }
-
-        boolean isAdmin = principal.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(authority -> Objects.equals(authority, "ROLE_ADMIN"));
-
-        boolean isMyOwn = Objects.equals(principal.getName(), authorId);
-
-        Status searchStatus = isAdmin | isMyOwn ? status : Status.APPROVED;
+        Status searchStatus = isUserAdminOrApplicationsAuthor(principal, authorId)
+                ? status
+                : Status.APPROVED;
 
         return applicationRepository.findAllByFilters(searchStatus, category, authorId);
     }
 
     @GetMapping("/{applicationId}")
-    public Application findById(@PathVariable String applicationId) {
-        return applicationRepository.findByStatusAndId(Status.APPROVED, applicationId)
+    public Application findById(JwtAuthenticationToken principal, @PathVariable String applicationId) {
+        return applicationRepository.findById(applicationId)
+                .filter(application -> isUserAdminOrApplicationsAuthor(principal, application.getAuthorId())
+                        || application.getStatus() == Status.APPROVED)
                 .orElseThrow();
     }
 
     @PostMapping
-    public Application createApplication(JwtAuthenticationToken principal,
-                                         @RequestBody Application application) {
-
+    public Application createApplication(JwtAuthenticationToken principal, @RequestBody Application application) {
         application.setAuthorId(principal.getName());
         application.setStatus(Status.PENDING);
         application.setCategory(application.getCategory());
@@ -63,8 +53,7 @@ public class ApplicationController {
 
     @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    public Application updateApplication(@PathVariable String id,
-                                         @RequestBody Application application) {
+    public Application updateApplication(@PathVariable String id, @RequestBody Application application) {
         application.setId(id);
 
         return applicationRepository.save(application);
@@ -75,5 +64,19 @@ public class ApplicationController {
     @Transactional
     public void deleteApplication(@PathVariable String id) {
         applicationRepository.deleteById(id);
+    }
+
+    private boolean isUserAdminOrApplicationsAuthor(JwtAuthenticationToken principal, String applicationId) {
+        if (Objects.isNull(principal)) {
+            return false;
+        }
+
+        boolean isAdmin = principal.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(authority -> Objects.equals(authority, "ROLE_ADMIN"));
+        boolean isApplicationsAuthor = Objects.equals(principal.getName(), applicationId);
+
+        return isAdmin || isApplicationsAuthor;
     }
 }

@@ -33,8 +33,7 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.GET, "/users/*").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(this::convertJwt);
+                .jwt().jwtAuthenticationConverter(this::convertJwt);
 
         return http.build();
     }
